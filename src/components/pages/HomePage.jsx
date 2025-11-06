@@ -9,12 +9,12 @@ import FloatingActionButton from "@/components/organisms/FloatingActionButton";
 import ApperIcon from "@/components/ApperIcon";
 
 const HomePage = () => {
-  const [tasks, setTasks] = useState([]);
+const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [creating, setCreating] = useState(false);
-
+  const [editingTask, setEditingTask] = useState(null);
   const loadTasks = async () => {
     try {
       setError("");
@@ -33,7 +33,7 @@ const HomePage = () => {
     loadTasks();
   }, []);
 
-  const handleCreateTask = async (taskData) => {
+const handleCreateTask = async (taskData) => {
     try {
       setCreating(true);
       const newTask = await taskService.create(taskData);
@@ -43,6 +43,26 @@ const HomePage = () => {
     } catch (err) {
       toast.error("Failed to create task. Please try again.");
       console.error("Error creating task:", err);
+    } finally {
+      setCreating(false);
+    }
+  };
+
+const handleEditTask = async (taskData) => {
+    try {
+      setCreating(true);
+      const updatedTask = await taskService.update(editingTask.Id, taskData);
+      setTasks(prev => 
+        prev.map(task => 
+          task.Id === editingTask.Id ? updatedTask : task
+        )
+      );
+      setIsModalOpen(false);
+      setEditingTask(null);
+      toast.success("Task updated successfully! ✨");
+    } catch (err) {
+      toast.error("Failed to update task. Please try again.");
+      console.error("Error updating task:", err);
     } finally {
       setCreating(false);
     }
@@ -125,12 +145,16 @@ const HomePage = () => {
       )}
 
       {/* Task List */}
-      <TaskList
+<TaskList
         tasks={tasks}
         loading={loading}
         error={error}
         onToggleComplete={handleToggleComplete}
         onDeleteTask={handleDeleteTask}
+        onEditTask={(task) => {
+          setEditingTask(task);
+          setIsModalOpen(true);
+        }}
         onRetry={loadTasks}
         onAddTask={() => setIsModalOpen(true)}
       />
@@ -142,11 +166,15 @@ const HomePage = () => {
       />
 
       {/* Task Modal */}
-      <TaskModal
+<TaskModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleCreateTask}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingTask(null);
+        }}
+        onSubmit={editingTask ? handleEditTask : handleCreateTask}
         loading={creating}
+        task={editingTask}
       />
     </div>
   );

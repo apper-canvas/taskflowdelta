@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import TaskForm from "@/components/molecules/TaskForm";
 import ApperIcon from "@/components/ApperIcon";
 
-const TaskModal = ({ isOpen, onClose, onSubmit, loading = false }) => {
+const TaskModal = ({ isOpen, onClose, onSubmit, loading = false, task = null }) => {
   // Handle ESC key to close modal
   useEffect(() => {
     const handleEsc = (e) => {
@@ -47,7 +47,9 @@ const TaskModal = ({ isOpen, onClose, onSubmit, loading = false }) => {
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
-              <h2 className="text-xl font-bold text-gray-900">Create New Task</h2>
+<h2 className="text-xl font-bold text-gray-900">
+                {task ? 'Edit Task' : 'Create New Task'}
+              </h2>
               <button
                 onClick={onClose}
                 disabled={loading}
@@ -59,9 +61,10 @@ const TaskModal = ({ isOpen, onClose, onSubmit, loading = false }) => {
 
             {/* Content */}
             <div className="p-6">
-              <TaskForm
+<TaskForm
                 onSubmit={onSubmit}
                 onCancel={onClose}
+                initialData={task}
                 loading={loading}
               />
             </div>

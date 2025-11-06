@@ -4,7 +4,7 @@ import Checkbox from "@/components/atoms/Checkbox";
 import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 
-const TaskCard = ({ task, onToggleComplete, onDelete }) => {
+const TaskCard = ({ task, onToggleComplete, onDelete, onEdit }) => {
   const handleToggleComplete = () => {
     onToggleComplete(task.Id, !task.completed);
   };
@@ -77,6 +77,14 @@ const TaskCard = ({ task, onToggleComplete, onDelete }) => {
         </div>
         
         <div className="flex-shrink-0">
+<Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onEdit(task)}
+            className="text-gray-400 hover:text-primary hover:bg-blue-50 p-2"
+          >
+            <ApperIcon name="Edit2" className="w-4 h-4" />
+          </Button>
           <Button
             variant="ghost"
             size="sm"

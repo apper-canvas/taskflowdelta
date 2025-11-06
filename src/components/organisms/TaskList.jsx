@@ -10,6 +10,7 @@ const TaskList = ({
   error, 
   onToggleComplete, 
   onDeleteTask, 
+  onEditTask,
   onRetry,
   onAddTask 
 }) => {
@@ -56,11 +57,12 @@ const TaskList = ({
     >
       <AnimatePresence mode="popLayout">
         {sortedTasks.map((task) => (
-          <TaskCard
+<TaskCard
             key={task.Id}
             task={task}
             onToggleComplete={onToggleComplete}
             onDelete={onDeleteTask}
+            onEdit={onEditTask}
           />
         ))}
       </AnimatePresence>

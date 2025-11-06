@@ -5,10 +5,10 @@ import Textarea from "@/components/atoms/Textarea";
 import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 
-const TaskForm = ({ onSubmit, onCancel, loading = false }) => {
+const TaskForm = ({ onSubmit, onCancel, loading = false, initialData = null }) => {
   const [formData, setFormData] = useState({
-    title: "",
-    description: ""
+    title: initialData?.title || "",
+    description: initialData?.description || ""
   });
   const [errors, setErrors] = useState({});
 
@@ -127,11 +127,11 @@ const TaskForm = ({ onSubmit, onCancel, loading = false }) => {
                 <ApperIcon name="Loader" className="w-4 h-4" />
               </motion.div>
               <span>Creating...</span>
-            </>
+</>
           ) : (
             <>
-              <ApperIcon name="Plus" className="w-4 h-4" />
-              <span>Create Task</span>
+              <ApperIcon name={initialData ? "Save" : "Plus"} className="w-4 h-4" />
+              <span>{initialData ? 'Save Changes' : 'Create Task'}</span>
             </>
           )}
         </Button>
