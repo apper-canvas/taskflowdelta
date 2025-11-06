@@ -16,6 +16,7 @@ const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [creating, setCreating] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [activeFilter, setActiveFilter] = useState('all');
   const loadTasks = async () => {
     try {
       setError("");
@@ -30,9 +31,13 @@ const [tasks, setTasks] = useState([]);
     }
   };
 
-  useEffect(() => {
+useEffect(() => {
     loadTasks();
   }, []);
+
+  const handleFilterChange = (filter) => {
+    setActiveFilter(filter);
+  };
 
 // Load categories
   const loadCategories = async () => {
@@ -161,6 +166,9 @@ const handleEditTask = async (taskData) => {
         tasks={tasks}
         loading={loading}
         error={error}
+        categories={categories}
+        activeFilter={activeFilter}
+        onFilterChange={handleFilterChange}
         onToggleComplete={handleToggleComplete}
         onDeleteTask={handleDeleteTask}
         onEditTask={(task) => {
