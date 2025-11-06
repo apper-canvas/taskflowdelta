@@ -1,42 +1,47 @@
 [
   {
-    "Id": 1,
+"Id": 1,
     "title": "Review quarterly budget report",
     "description": "Analyze Q3 financial performance and prepare recommendations for Q4 budget adjustments",
     "completed": false,
     "createdAt": "2024-01-15T09:30:00.000Z",
-    "updatedAt": "2024-01-15T09:30:00.000Z"
+    "updatedAt": "2024-01-15T09:30:00.000Z",
+    "dueDate": "2024-01-20T23:59:59.000Z"
   },
-  {
+{
     "Id": 2,
     "title": "Schedule team standup meeting",
     "description": "Coordinate with team members to find a suitable time slot for weekly standup meetings",
     "completed": true,
     "createdAt": "2024-01-14T14:15:00.000Z",
-    "updatedAt": "2024-01-15T08:45:00.000Z"
+    "updatedAt": "2024-01-15T08:45:00.000Z",
+    "dueDate": "2024-01-16T17:00:00.000Z"
   },
-  {
+{
     "Id": 3,
     "title": "Update project documentation",
     "description": "Review and update API documentation to reflect recent changes in the authentication system",
     "completed": false,
     "createdAt": "2024-01-13T11:20:00.000Z",
-    "updatedAt": "2024-01-13T11:20:00.000Z"
+    "updatedAt": "2024-01-13T11:20:00.000Z",
+    "dueDate": "2024-01-10T23:59:59.000Z"
   },
-  {
+{
     "Id": 4,
     "title": "Prepare presentation slides",
     "description": "Create presentation for client meeting covering project timeline, deliverables, and milestones",
     "completed": false,
     "createdAt": "2024-01-12T16:45:00.000Z",
-    "updatedAt": "2024-01-12T16:45:00.000Z"
+    "updatedAt": "2024-01-12T16:45:00.000Z",
+    "dueDate": "2024-01-18T14:00:00.000Z"
   },
-  {
+{
     "Id": 5,
     "title": "Code review for feature branch",
     "description": "Review pull request #247 for the new user authentication feature and provide feedback",
     "completed": true,
     "createdAt": "2024-01-11T10:30:00.000Z",
-    "updatedAt": "2024-01-14T13:20:00.000Z"
+    "updatedAt": "2024-01-14T13:20:00.000Z",
+    "dueDate": null
   }
 ]

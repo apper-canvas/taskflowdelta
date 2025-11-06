@@ -40,7 +40,7 @@ export const taskService = {
     return task ? { ...task } : null;
   },
 
-  async create(taskData) {
+async create(taskData) {
     await delay(400);
     const tasks = getStoredTasks();
     const maxId = tasks.length > 0 ? Math.max(...tasks.map(t => t.Id)) : 0;
@@ -52,7 +52,8 @@ export const taskService = {
       description: taskData.description,
       completed: false,
       createdAt: now,
-      updatedAt: now
+      updatedAt: now,
+      dueDate: taskData.dueDate || null
     };
 
     const updatedTasks = [...tasks, newTask];
@@ -69,7 +70,7 @@ export const taskService = {
       throw new Error("Task not found");
     }
 
-    const updatedTask = {
+const updatedTask = {
       ...tasks[taskIndex],
       ...updates,
       updatedAt: new Date().toISOString()

@@ -47,8 +47,28 @@ const TaskCard = ({ task, onToggleComplete, onDelete, onEdit }) => {
             className="text-lg font-semibold text-gray-900 mb-2 leading-tight"
           >
             {task.title}
-          </motion.h3>
-          
+</motion.h3>
+
+          {/* Due Date Display */}
+          {task.dueDate && (
+            <div className={`flex items-center space-x-1 text-xs mt-1 ${
+              new Date(task.dueDate) < new Date() && !task.completed 
+                ? 'text-error' 
+                : 'text-gray-500'
+            }`}>
+              {new Date(task.dueDate) < new Date() && !task.completed ? (
+                <ApperIcon name="AlertTriangle" className="w-3 h-3" />
+              ) : (
+                <ApperIcon name="Calendar" className="w-3 h-3" />
+              )}
+              <span>
+                Due {format(new Date(task.dueDate), "MMM d, yyyy")}
+                {new Date(task.dueDate) < new Date() && !task.completed && (
+                  <span className="font-medium"> (Overdue)</span>
+                )}
+              </span>
+            </div>
+          )}
           {task.description && (
             <motion.p
               animate={{

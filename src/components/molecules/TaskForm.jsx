@@ -6,9 +6,10 @@ import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 
 const TaskForm = ({ onSubmit, onCancel, loading = false, initialData = null }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     title: initialData?.title || "",
-    description: initialData?.description || ""
+    description: initialData?.description || "",
+    dueDate: initialData?.dueDate ? new Date(initialData.dueDate).toISOString().split('T')[0] : ""
   });
   const [errors, setErrors] = useState({});
 
@@ -74,6 +75,37 @@ const TaskForm = ({ onSubmit, onCancel, loading = false, initialData = null }) =
             {errors.title}
           </motion.p>
         )}
+</div>
+
+      {/* Due Date Field */}
+      <div>
+        <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-2">
+          Due Date (Optional)
+        </label>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+        >
+          <Input
+            id="dueDate"
+            type="date"
+            value={formData.dueDate}
+            onChange={(e) => handleChange("dueDate", e.target.value)}
+            className={`w-full ${errors.dueDate ? "border-error focus:ring-error" : ""}`}
+            placeholder="Select due date"
+          />
+        </motion.div>
+        {errors.dueDate && (
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-error text-xs mt-1 flex items-center space-x-1"
+          >
+            <ApperIcon name="AlertCircle" className="w-3 h-3" />
+            <span>{errors.dueDate}</span>
+          </motion.p>
+        )}
       </div>
 
       <div>
@@ -115,7 +147,7 @@ const TaskForm = ({ onSubmit, onCancel, loading = false, initialData = null }) =
         </Button>
         <Button
           type="submit"
-          disabled={loading || !formData.title.trim()}
+disabled={loading || !formData.title.trim()}
           className="flex items-center space-x-2"
         >
           {loading ? (
