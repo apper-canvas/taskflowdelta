@@ -9,6 +9,7 @@ const TaskForm = ({ onSubmit, onCancel, loading = false, initialData = null }) =
 const [formData, setFormData] = useState({
     title: initialData?.title || "",
     description: initialData?.description || "",
+    priority: initialData?.priority || "Medium",
     dueDate: initialData?.dueDate ? new Date(initialData.dueDate).toISOString().split('T')[0] : ""
   });
   const [errors, setErrors] = useState({});
@@ -77,6 +78,36 @@ const [formData, setFormData] = useState({
         )}
 </div>
 
+        {/* Priority Selection */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Priority Level
+          </label>
+          <div className="grid grid-cols-3 gap-2">
+            {['High', 'Medium', 'Low'].map((priority) => (
+              <button
+                key={priority}
+                type="button"
+                onClick={() => handleChange('priority', priority)}
+                className={`p-3 rounded-lg border-2 transition-all duration-200 flex items-center justify-center space-x-2 ${
+                  formData.priority === priority
+                    ? priority === 'High' 
+                      ? 'border-red-500 bg-red-50 text-red-700'
+                      : priority === 'Medium'
+                      ? 'border-orange-500 bg-orange-50 text-orange-700'
+                      : 'border-blue-500 bg-blue-50 text-blue-700'
+                    : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                }`}
+              >
+                <ApperIcon 
+                  name={priority === 'High' ? 'AlertTriangle' : priority === 'Medium' ? 'Clock' : 'Info'} 
+                  className="w-4 h-4" 
+                />
+                <span className="text-sm font-medium">{priority}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       {/* Due Date Field */}
       <div>
         <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-2">

@@ -14,7 +14,7 @@ const TaskCard = ({ task, onToggleComplete, onDelete, onEdit }) => {
   };
 
   return (
-    <motion.div
+<motion.div
       layout
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ 
@@ -28,7 +28,11 @@ const TaskCard = ({ task, onToggleComplete, onDelete, onEdit }) => {
         transition: { duration: 0.15 }
       }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="bg-white rounded-lg shadow-card hover:shadow-card-hover p-6 transition-all duration-200"
+      className={`bg-white rounded-lg shadow-card hover:shadow-card-hover p-6 transition-all duration-200 border-l-4 ${
+        task.priority === 'High' ? 'border-l-red-500' :
+        task.priority === 'Medium' ? 'border-l-orange-500' : 
+        'border-l-blue-500'
+      }`}
     >
       <div className="flex items-start space-x-4">
         <div className="flex-shrink-0 mt-1">
@@ -48,7 +52,19 @@ const TaskCard = ({ task, onToggleComplete, onDelete, onEdit }) => {
           >
             {task.title}
 </motion.h3>
-
+        
+        {/* Priority Badge */}
+        <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-2 ${
+          task.priority === 'High' ? 'bg-red-100 text-red-700' :
+          task.priority === 'Medium' ? 'bg-orange-100 text-orange-700' : 
+          'bg-blue-100 text-blue-700'
+        }`}>
+          <ApperIcon 
+            name={task.priority === 'High' ? 'AlertTriangle' : task.priority === 'Medium' ? 'Clock' : 'Info'} 
+            className="w-3 h-3 mr-1" 
+          />
+          {task.priority} Priority
+        </div>
           {/* Due Date Display */}
           {task.dueDate && (
             <div className={`flex items-center space-x-1 text-xs mt-1 ${

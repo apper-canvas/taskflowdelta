@@ -41,11 +41,25 @@ const TaskList = ({
   }
 
   // Sort tasks: incomplete first, then completed
-  const sortedTasks = [...tasks].sort((a, b) => {
-    if (a.completed === b.completed) {
-      return new Date(b.createdAt) - new Date(a.createdAt);
+const sortedTasks = [...tasks].sort((a, b) => {
+    // First, sort by completion status
+    if (a.completed !== b.completed) {
+      return a.completed - b.completed;
     }
-    return a.completed - b.completed;
+    
+    // For incomplete tasks, sort by priority
+    if (!a.completed && !b.completed) {
+      const priorityOrder = { 'High': 0, 'Medium': 1, 'Low': 2 };
+      const aPriority = priorityOrder[a.priority] ?? 1;
+      const bPriority = priorityOrder[b.priority] ?? 1;
+      
+      if (aPriority !== bPriority) {
+        return aPriority - bPriority;
+      }
+    }
+    
+    // Finally, sort by creation date (newest first)
+    return new Date(b.createdAt) - new Date(a.createdAt);
   });
 
   return (
