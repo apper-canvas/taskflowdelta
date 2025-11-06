@@ -1,13 +1,15 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import React from "react";
 import TaskCard from "@/components/molecules/TaskCard";
-import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
+import Loading from "@/components/ui/Loading";
 
 const TaskList = ({ 
-  tasks, 
-  loading, 
-  error, 
+  tasks = [], 
+  loading = false, 
+  error = "", 
+  categories = [],
   onToggleComplete, 
   onDeleteTask, 
   onEditTask,
@@ -70,10 +72,11 @@ const sortedTasks = [...tasks].sort((a, b) => {
       className="space-y-4"
     >
       <AnimatePresence mode="popLayout">
-        {sortedTasks.map((task) => (
-<TaskCard
-            key={task.Id}
+{sortedTasks.map((task) => (
+          <TaskCard
+            key={task.id}
             task={task}
+            categories={categories}
             onToggleComplete={onToggleComplete}
             onDelete={onDeleteTask}
             onEdit={onEditTask}

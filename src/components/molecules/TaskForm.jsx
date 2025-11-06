@@ -1,15 +1,17 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import Input from "@/components/atoms/Input";
+import ApperIcon from "@/components/ApperIcon";
 import Textarea from "@/components/atoms/Textarea";
 import Button from "@/components/atoms/Button";
-import ApperIcon from "@/components/ApperIcon";
+import Input from "@/components/atoms/Input";
+import Select from "@/components/atoms/Select";
 
-const TaskForm = ({ onSubmit, onCancel, loading = false, initialData = null }) => {
+const TaskForm = ({ onSubmit, onCancel, loading = false, initialData = null, categories = [] }) => {
 const [formData, setFormData] = useState({
     title: initialData?.title || "",
     description: initialData?.description || "",
     priority: initialData?.priority || "Medium",
+    categoryId: initialData?.categoryId || "",
     dueDate: initialData?.dueDate ? new Date(initialData.dueDate).toISOString().split('T')[0] : ""
   });
   const [errors, setErrors] = useState({});
@@ -77,6 +79,26 @@ const [formData, setFormData] = useState({
           </motion.p>
         )}
 </div>
+
+{/* Category Selection */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Category
+          </label>
+          <Select
+            value={formData.categoryId}
+            onChange={(value) => handleChange('categoryId', value)}
+            placeholder="Select a category"
+            className="w-full"
+          >
+            <option value="">No Category</option>
+            {categories.map((category) => (
+              <option key={category.Id} value={category.Id}>
+                {category.name}
+              </option>
+            ))}
+          </Select>
+        </div>
 
         {/* Priority Selection */}
         <div className="space-y-2">

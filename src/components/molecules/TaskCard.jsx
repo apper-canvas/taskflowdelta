@@ -4,7 +4,9 @@ import Checkbox from "@/components/atoms/Checkbox";
 import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 
-const TaskCard = ({ task, onToggleComplete, onDelete, onEdit }) => {
+const TaskCard = ({ task, onToggleComplete, onDelete, onEdit, categories = [] }) => {
+  // Find the category for this task
+  const taskCategory = categories.find(cat => cat.Id === task.categoryId);
   const handleToggleComplete = () => {
     onToggleComplete(task.Id, !task.completed);
   };
@@ -52,18 +54,33 @@ const TaskCard = ({ task, onToggleComplete, onDelete, onEdit }) => {
           >
             {task.title}
 </motion.h3>
-        
-        {/* Priority Badge */}
-        <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-2 ${
-          task.priority === 'High' ? 'bg-red-100 text-red-700' :
-          task.priority === 'Medium' ? 'bg-orange-100 text-orange-700' : 
-          'bg-blue-100 text-blue-700'
-        }`}>
-          <ApperIcon 
-            name={task.priority === 'High' ? 'AlertTriangle' : task.priority === 'Medium' ? 'Clock' : 'Info'} 
-            className="w-3 h-3 mr-1" 
-          />
-          {task.priority} Priority
+{/* Category and Priority Badges */}
+        <div className="flex gap-2 mt-2 flex-wrap">
+          {taskCategory && (
+            <div 
+              className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+              style={{ 
+                backgroundColor: `${taskCategory.color}20`,
+                color: taskCategory.color,
+                border: `1px solid ${taskCategory.color}30`
+              }}
+            >
+              <ApperIcon name="Tag" className="w-3 h-3 mr-1" />
+              {taskCategory.name}
+            </div>
+          )}
+          
+          <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+            task.priority === 'High' ? 'bg-red-100 text-red-700' :
+            task.priority === 'Medium' ? 'bg-orange-100 text-orange-700' : 
+            'bg-blue-100 text-blue-700'
+          }`}>
+            <ApperIcon 
+              name={task.priority === 'High' ? 'AlertTriangle' : task.priority === 'Medium' ? 'Clock' : 'Info'} 
+              className="w-3 h-3 mr-1" 
+            />
+            {task.priority} Priority
+          </div>
         </div>
           {/* Due Date Display */}
           {task.dueDate && (

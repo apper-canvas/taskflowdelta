@@ -52,6 +52,7 @@ async create(taskData) {
       description: taskData.description,
       completed: false,
       priority: taskData.priority || "Medium",
+      categoryId: taskData.categoryId || null,
       createdAt: now,
       updatedAt: now,
       dueDate: taskData.dueDate || null

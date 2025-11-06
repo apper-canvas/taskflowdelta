@@ -1,9 +1,9 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
-import TaskForm from "@/components/molecules/TaskForm";
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useEffect } from "react";
 import ApperIcon from "@/components/ApperIcon";
+import TaskForm from "@/components/molecules/TaskForm";
 
-const TaskModal = ({ isOpen, onClose, onSubmit, loading = false, task = null }) => {
+const TaskModal = ({ isOpen, onClose, onSubmit, loading = false, task = null, categories = [] }) => {
   // Handle ESC key to close modal
   useEffect(() => {
     const handleEsc = (e) => {
@@ -66,6 +66,7 @@ const TaskModal = ({ isOpen, onClose, onSubmit, loading = false, task = null }) 
                 onCancel={onClose}
                 initialData={task}
                 loading={loading}
+                categories={categories}
               />
             </div>
           </motion.div>

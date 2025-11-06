@@ -10,6 +10,7 @@ import ApperIcon from "@/components/ApperIcon";
 
 const HomePage = () => {
 const [tasks, setTasks] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +34,18 @@ const [tasks, setTasks] = useState([]);
     loadTasks();
   }, []);
 
-const handleCreateTask = async (taskData) => {
+// Load categories
+  const loadCategories = async () => {
+    try {
+      const { default: categoryService } = await import('@/services/api/categoryService');
+      const categoriesData = await categoryService.getAll();
+      setCategories(categoriesData);
+    } catch (err) {
+      console.error('Failed to load categories:', err);
+    }
+  };
+
+  const handleCreateTask = async (taskData) => {
     try {
       setCreating(true);
       const newTask = await taskService.create(taskData);
@@ -175,6 +187,7 @@ const handleEditTask = async (taskData) => {
         onSubmit={editingTask ? handleEditTask : handleCreateTask}
         loading={creating}
         task={editingTask}
+        categories={categories}
       />
     </div>
   );
